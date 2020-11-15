@@ -1,0 +1,33 @@
+Option Explicit
+
+Sub increment()
+
+    Dim numOfPrints As Variant
+    Dim x As Integer
+    Dim b As Integer
+    Dim i As Integer
+    
+    
+    'Ask user how many they want to be printed
+    numOfPrints = InputBox("Amount to be printed")
+    x = Range("B2").Value
+    Range("B2").Select
+    'loop which whill increment numbers and also print until desired amount
+    For i = 1 To numOfPrints
+        x = x + 1
+        Selection.FormulaR1C1 = Format(x, "00000")
+        ActiveSheet.PrintOut 'PrintToFile:=True, PrToFileName:="C:\Users\graha\OneDrive\Desktop\Testing\" & x & ".pdf"
+    Next i
+    'Make sure it automatically saves to be safe
+    ActiveWorkbook.Save
+    
+    'MsgBox to let them know printing has finished and see if they want to exit added another save to be on the safe side
+    b = MsgBox("Would you like to save and exit?", vbYesNo + vbQuestion, "Printing is finished ")
+    
+    If b = vbYes Then
+        ActiveWorkbook.Close SaveChanges:=True
+    Else
+        'do nothing
+    End If
+    
+End Sub
